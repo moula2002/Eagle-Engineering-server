@@ -18,6 +18,22 @@ export const createSubCategory = async (req, res, next) => {
   }
 };
 
+export const updateSubCategory = async (req, res, next) => {
+  try {
+    let subCategory = await SubCategory.findById(req.params.id);
+    if (!subCategory) {
+      return res.status(404).json({ success: false, message: 'SubCategory not found' });
+    }
+    subCategory = await SubCategory.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.json({ success: true, data: subCategory });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteSubCategory = async (req, res, next) => {
   try {
     const subCategory = await SubCategory.findById(req.params.id);
