@@ -1,29 +1,17 @@
 import multer from 'multer';
 import path from 'path';
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename(req, file, cb) {
-    const ext = path.extname(file.originalname);
-    const sanitizedName = file.originalname
-      .replace(ext, '')
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '-');
-    cb(null, `${sanitizedName}-${Date.now()}${ext}`);
-  },
-});
+const storage = multer.memoryStorage(); // Store files in memory as Buffers
 
 function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png|webp|svg|pdf|doc|docx/;
+  const filetypes = /jpg|jpeg|png|webp|svg|pdf|doc|docx|raw/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
 
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb(new Error('Only image files (jpg, png, webp, svg) and documents (pdf, docx) are allowed!'));
+    cb(new Error('Only image files (jpg, png, webp, svg, raw) and documents (pdf, docx) are allowed!'));
   }
 }
 
