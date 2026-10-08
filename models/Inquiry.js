@@ -32,6 +32,10 @@ const inquirySchema = new mongoose.Schema(
       required: [true, 'Subject is required'],
       trim: true,
     },
+    productImage: {
+      type: String,
+      default: '',
+    },
     message: {
       type: String,
       required: [true, 'Message content is required'],

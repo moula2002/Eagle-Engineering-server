@@ -5,7 +5,7 @@ import Inquiry from '../models/Inquiry.js';
 // @access  Public
 export const createInquiry = async (req, res, next) => {
   try {
-    const { name, email, phone, company, service, subject, message } = req.body;
+    const { name, email, phone, company, service, subject, message, productImage } = req.body;
 
     if (!name || !email || !phone || !subject || !message) {
       return res.status(400).json({ success: false, message: 'Please provide all required fields (name, email, phone, subject, message)' });
@@ -18,6 +18,7 @@ export const createInquiry = async (req, res, next) => {
       company: company || 'N/A',
       service: service || 'General Inquiry',
       subject,
+      productImage: productImage || '',
       message,
     });
 
