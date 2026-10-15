@@ -52,6 +52,16 @@ const productSchema = new mongoose.Schema(
       color: { type: String, default: '' },
       weight: { type: String, default: '' },
     },
+    features: [
+      {
+        type: String,
+      },
+    ],
+    applications: [
+      {
+        type: String,
+      },
+    ],
     seo: {
       metaTitle: { type: String, default: '' },
       metaDescription: { type: String, default: '' },

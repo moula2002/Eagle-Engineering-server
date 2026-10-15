@@ -2,7 +2,7 @@ import Product from '../models/Product.js';
 
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({})
+    const products = await Product.find({}).select('-gallery')
       .populate('category', 'name')
       .populate('subCategory', 'name');
     res.json({ success: true, count: products.length, data: products });
