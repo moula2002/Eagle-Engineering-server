@@ -18,13 +18,37 @@ export const getAnalyticsSummary = async (req, res, next) => {
     const newInquiries = await Inquiry.countDocuments({ status: 'New' });
     const inReviewInquiries = await Inquiry.countDocuments({ status: 'In Review' });
 
-    // Group products by category
+    // Group products by category and populate category name
     const productsByCategory = await Product.aggregate([
       {
         $group: {
           _id: '$category',
           count: { $sum: 1 },
         },
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'categoryInfo',
+        },
+      },
+      {
+        $unwind: {
+          path: '$categoryInfo',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: { $ifNull: ['$categoryInfo.name', 'Uncategorized'] },
+          count: 1,
+        },
+      },
+      {
+        $sort: { count: -1 },
       },
     ]);
 
