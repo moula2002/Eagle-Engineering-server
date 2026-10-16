@@ -17,14 +17,17 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
       required: [true, 'Category is required'],
+      index: true,
     },
     subCategory: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'SubCategory',
+      index: true,
     },
     brand: {
       type: String,
       default: '',
+      trim: true,
     },
     shortDescription: {
       type: String,
@@ -70,6 +73,7 @@ const productSchema = new mongoose.Schema(
     isFeatured: {
       type: Boolean,
       default: false,
+      index: true,
     },
     isNewProduct: {
       type: Boolean,
@@ -79,12 +83,17 @@ const productSchema = new mongoose.Schema(
       type: String,
       enum: ['Active', 'Inactive'],
       default: 'Active',
+      index: true,
     },
   },
   {
     timestamps: true,
   }
 );
+
+// Optimize query performance with compound indexes
+productSchema.index({ createdAt: -1 });
+productSchema.index({ name: 'text', sku: 'text', brand: 'text' });
 
 const Product = mongoose.model('Product', productSchema);
 export default Product;

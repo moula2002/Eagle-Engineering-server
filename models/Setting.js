@@ -16,7 +16,15 @@ const settingSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      default: '+1 (800) 555-EAGLE',
+      default: '+91 96321 44367',
+    },
+    fax: {
+      type: String,
+      default: '+91 80-7966 7629',
+    },
+    officePhone: {
+      type: String,
+      default: '+91 80-7966 7629',
     },
     alternatePhone: {
       type: String,
