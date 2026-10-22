@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
+import './Category.js';
+import './SubCategory.js';
 
 const productSchema = new mongoose.Schema(
   {
@@ -95,5 +97,5 @@ const productSchema = new mongoose.Schema(
 productSchema.index({ createdAt: -1 });
 productSchema.index({ name: 'text', sku: 'text', brand: 'text' });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 export default Product;
